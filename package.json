@@ -1,5 +1,5 @@
 {
-  "name": "youtube-blog",
+  "name": "blogify",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
@@ -9,7 +9,7 @@
   },
   "author": "",
   "engines": {
-    "node": ">=16.0.0"
+    "node": "20.x"
   },
   "license": "ISC",
   "dependencies": {

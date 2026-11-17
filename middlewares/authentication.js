@@ -3,19 +3,20 @@ const { validateToken } = require("../services/authentication");
 function checkForAuthenticationCookie(cookieName) {
   return (req, res, next) => {
     const tokenCookieValue = req.cookies[cookieName];
-    if (!tokenCookieValue) {
-      return next();
-    }
+    if (!tokenCookieValue) return next();
 
     try {
-      const userPayload = validateToken(tokenCookieValue);
-      req.user = userPayload;
-    } catch (error) {}
-
+      req.user = validateToken(tokenCookieValue);
+    } catch (error) {
+      // invalid/expired token: treat as logged out
+    }
     return next();
   };
 }
 
-module.exports = {
-  checkForAuthenticationCookie,
-};
+function requireAuth(req, res, next) {
+  if (!req.user) return res.redirect("/user/signin");
+  return next();
+}
+
+module.exports = { checkForAuthenticationCookie, requireAuth };
